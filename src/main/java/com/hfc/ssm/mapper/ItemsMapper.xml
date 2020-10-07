@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hfc.ssm.mapper.ItemsMapper">
+
+<select id="selectAll" resultType="com.hfc.ssm.po.Items">
+  select *from items
+</select>
+<select id="selectByid" resultType="com.hfc.ssm.po.Items">
+  select * from items where id=#{id}
+</select>
+<update id="update" parameterType="com.hfc.ssm.po.Items">
+ update items set name=#{name},price=#{price},detail=#{detail} where id=#{id}
+</update>
+ 
+ <delete id="delete" parameterType="java.lang.Integer">
+ delete from items where id=#{id}
+ </delete>
+ <insert id="add" parameterType="com.hfc.ssm.po.Items">
+ insert into items(name,price,detail) values(#{name},#{price},#{detail})
+ 
+ </insert>
+
+<delete id="deleteItems" parameterType="java.util.Arrays">
+delete from items where id in
+
+<if test="array!=null">
+<foreach collection="array" index="index" open="(" item="a" separator="," close=")">
+ #{a}
+</foreach>
+</if>
+</delete>
+
+
+<select id="queryItems" parameterType="java.util.Arrays" resultType="com.hfc.ssm.po.Items">
+
+select *from items where id in
+<if test="array!=null">
+<foreach collection="array" index="index" open="(" item="a" separator="," close=")">
+ #{a}
+</foreach>
+</if>
+
+</select>
+
+
+<update id="updateItems" parameterType="java.util.Arrays">
+update items set price=5000 where id in
+
+<if test="array!=null">
+<foreach collection="array" index="index" open="(" item="a" separator="," close=")">
+ #{a}
+</foreach>
+</if>
+</update>
+
+
+</mapper>
